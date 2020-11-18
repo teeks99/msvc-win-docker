@@ -1,20 +1,20 @@
-# escape=`
-
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+#escape=`
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.7.2-windowsservercore-ltsc2019
 
 # Restore the default Windows shell for correct batch processing.
 SHELL ["cmd", "/S", "/C"]
 
-# Download the Build Tools bootstrapper.
 ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\TEMP\vs_buildtools.exe
 
-# Install Build Tools excluding workloads and components with known issues.
-RUN C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
-    --installPath C:\BuildTools `
-    --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended
+# These options require 30GB+ of space on the docker image, which is higher than the default of 20GB
+# In the docker engine config, dockerd.json, add a json line `"storage-opts": ["size=40G"],`
+RUN C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache --includeRecommended `
+    --add Microsoft.VisualStudio.Workload.MSBuildTools `
+    --add Microsoft.VisualStudio.Workload.VCTools `
+ || IF "%ERRORLEVEL%"=="3010" EXIT 0
 
-# Start developer command prompt with any other commands specified.
-ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
+# Define the entry point for the docker container.
+# This entry point adds the developer environemnt and starts the command shell
+ENTRYPOINT ["C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\Common7\\Tools\\VsDevCmd.bat", `
+    "&&", "cmd.exe"]
 
-# Default to PowerShell if no other command specified.
-CMD ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
