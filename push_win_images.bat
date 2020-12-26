@@ -1,0 +1,1 @@
+docker push teeks99/msvc-win:14.2
