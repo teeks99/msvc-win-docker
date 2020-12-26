@@ -1,2 +1,6 @@
-cd msvc-14.2
-docker build -t teeks99/msvc-win:14.2 .
+
+for %%ver in ( msvc-14.2 ) do (
+  pushd %%ver
+  docker build -t teeks99/msvc-win:%%ver .
+  popd
+)
