@@ -1,6 +1,6 @@
 
-for %%v in ( msvc-14.2 ) do (
-  pushd %%v
-  docker build -t teeks99/msvc-win:%%v .
+for %%v in ( 14.2 ) do (
+  pushd msvc-%%v
+  docker build -t teeks99/msvc-win:%%v -m 2g .
   popd
 )
