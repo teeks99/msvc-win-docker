@@ -9,17 +9,26 @@ ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\TEMP\vs_buildtools.exe
 # These options require 30GB+ of space on the docker image, which is higher than the default of 20GB
 # In the docker engine config, dockerd.json, add a json line `"storage-opts": ["size=40G"],`
 # This command is only successful when run with `-m 4g` for 4GB of RAM
-RUN start /wait /b C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
-    --includeRecommended `
-    --add Microsoft.VisualStudio.Workload.MSBuildTools `
-    --add Microsoft.VisualStudio.Workload.VCTools `
-    --add Microsoft.VisualStudio.Component.VC.ATL `
-    --add Microsoft.VisualStudio.Component.VC.ATLMFC `
-    --add Microsoft.VisualStudio.Component.VC.CLI.Support `
-    --add Microsoft.VisualStudio.Component.Windows10SDK.10586 `
- || IF "%ERRORLEVEL%"=="3010" EXIT 0
 
-# Failed try: Start-Process -PassThru -Wait -FilePath "C:\TEMP\vs_buildtools.exe" -ArgumentList '--quiet','--wait','--norestart','--nocache','--includeRecommended','--add Microsoft.VisualStudio.Workload.MSBuildTools','--add','Microsoft.VisualStudio.Workload.VCTools'
+#RUN start /wait /b C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
+#    --includeRecommended `
+#    --add Microsoft.VisualStudio.Workload.MSBuildTools `
+#    --add Microsoft.VisualStudio.Workload.VCTools `
+#    --add Microsoft.VisualStudio.Component.VC.ATL `
+#    --add Microsoft.VisualStudio.Component.VC.ATLMFC `
+#    --add Microsoft.VisualStudio.Component.VC.CLI.Support `
+#    --add Microsoft.VisualStudio.Component.Windows10SDK.10586 `
+# || IF "%ERRORLEVEL%"=="3010" EXIT 0
+
+# Failed try: 
+RUN Start-Process -PassThru -Wait -FilePath "C:\TEMP\vs_buildtools.exe" -ArgumentList `
+    '--quiet','--wait','--norestart','--nocache','--includeRecommended',`
+    '--add','Microsoft.VisualStudio.Workload.MSBuildTools',`
+    '--add','Microsoft.VisualStudio.Workload.VCTools',`
+    '--add','Microsoft.VisualStudio.Component.VC.ATL',`
+    '--add','Microsoft.VisualStudio.Component.VC.ATLMFC',`
+    '--add','Microsoft.VisualStudio.Component.VC.CLI.Support',`
+    '--add','Microsoft.VisualStudio.Component.Windows10SDK.10586'
 
 # Define the entry point for the docker container.
 # This entry point adds the developer environemnt and starts the command shell
