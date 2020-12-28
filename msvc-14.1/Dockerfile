@@ -21,7 +21,7 @@ ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\TEMP\vs_buildtools.exe
 # || IF "%ERRORLEVEL%"=="3010" EXIT 0
 
 # Failed try: 
-RUN Start-Process -PassThru -Wait -FilePath "C:\TEMP\vs_buildtools.exe" -ArgumentList `
+RUN powershell -Command Start-Process -PassThru -Wait -FilePath "C:\TEMP\vs_buildtools.exe" -ArgumentList `
     '--quiet','--wait','--norestart','--nocache','--includeRecommended',`
     '--add','Microsoft.VisualStudio.Workload.MSBuildTools',`
     '--add','Microsoft.VisualStudio.Workload.VCTools',`
