@@ -1,5 +1,6 @@
 
 set datestr=%DATE:~10,4%%DATE:~4,2%%DATE:~7,2%
+echo %datestr% > lastBuildDate.txt
 
 for %%v in ( 14.1 14.2 ) do (
   pushd msvc-%%v
