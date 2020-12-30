@@ -17,5 +17,6 @@ RUN powershell -Command Start-Process -PassThru -Wait -FilePath "C:\TEMP\vs2015_
 
 # Define the entry point for the docker container.
 # This entry point adds the developer environemnt and starts the command shell
-ENTRYPOINT ["cmd.exe"]
+ENTRYPOINT ["C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat", `
+   "&&", "cmd.exe"]
 
