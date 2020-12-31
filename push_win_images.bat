@@ -4,7 +4,7 @@ if exist lastBuildDate.txt (
   set /p datestr=<lastBuildDate.txt
 )
 
-for %%v in ( 14.1 14.2 ) do (
+for %%v in ( 14.0 14.1 14.2 ) do (
   docker push teeks99/msvc-win:%%v_%datestr%
   docker push teeks99/msvc-win:%%v
 )
