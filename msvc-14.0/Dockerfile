@@ -14,7 +14,7 @@ RUN powershell -Command Start-Process -PassThru -Wait -FilePath "C:\TEMP\vs2015_
     NativeLanguageSupport_VC;`
     NativeLanguageSupport_MFC;`
     Windows10_ToolsAndSDKV13;`
-    Win10SDK_HiddenV3'
+    Win10SDK_10.0.10586.212'
 
 # Define the entry point for the docker container.
 # This entry point adds the developer environemnt and starts the command shell
